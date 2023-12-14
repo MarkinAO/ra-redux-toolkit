@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    gap: 20px;
+    .poster {
+        width: 80px;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    .description {
+        text-align: left;
+
+        .title {
+            margin: 0;
+        }
+    }
+}
