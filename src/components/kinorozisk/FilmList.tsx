@@ -1,10 +1,12 @@
 import FilmListItem from "./FilmListItem";
 import { filmListItemProps } from "./types";
 import type { RootState, AppDispatch } from "./redux/store";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { getFilmList } from "./redux/filmListSlice";
 import { useEffect } from "react";
-
+import { Link } from "react-router-dom";
+import style from "./styles/FilmList.module.scss";
+import Loder from "./UI/Loder";
 
 export default function FilmList() {
     const dispatch = useDispatch<AppDispatch>();
@@ -14,12 +16,16 @@ export default function FilmList() {
     useEffect(() => {
         dispatch(getFilmList())
     }, [dispatch])
-
+    
     return(
         <>
+            {loading && <Loder />}
             {!loading &&
-            filmList.map((film: filmListItemProps) => {
-                return <FilmListItem film={{...film}} key={film.imdbID} />
+            filmList.map((film: filmListItemProps) => {                
+                return film.noresult ? "No result" :
+                    <Link className={style.link} to={`/${film.imdbID}`} key={film.imdbID}>
+                        <FilmListItem film={{...film}} />
+                    </Link>                
             })}
         </>
     )

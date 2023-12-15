@@ -1,5 +1,5 @@
 import { filmListItemProps } from './types';
-import style from './FilmListItem.module.scss';
+import style from './styles/FilmListItem.module.scss';
 
 interface IFilm {
     film: filmListItemProps
@@ -10,7 +10,7 @@ export default function FilmListItem(props: IFilm) {
     return(
         <div className={style.container}>
             <div className={style.poster}>
-                <img src={film.Poster} alt="" />
+                <img src={film.Poster} alt="Poster" />
             </div>
             <div className={style.description}>
                 <h2 className={style.title}>{film.Title}</h2>

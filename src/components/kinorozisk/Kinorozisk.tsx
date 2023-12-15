@@ -1,12 +1,12 @@
 import Search from "./Search";
-import FilmList from "./FilmList";
-
+import FilmCard from "./FilmCard";
+import { Routes, Route } from "react-router-dom";
 
 export default function Kinorozisk() {
     return(
-        <>
-            <Search />
-            <FilmList />
-        </>
+        <Routes>
+            <Route path="/" element={<Search />} />                
+            <Route path="/:id" element={<FilmCard />} />
+        </Routes>
     )
 }

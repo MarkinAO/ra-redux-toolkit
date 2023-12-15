@@ -16,4 +16,5 @@ export type filmListItemProps = {
     Year: string
     Poster: string
     imdbID: string
+    noresult?: boolean
 }

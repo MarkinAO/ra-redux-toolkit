@@ -12,7 +12,7 @@ export interface FilmList {
 const initialState: FilmList = {
   loading: false,
   list: [],
-  error: ''
+  error: '',
 }
 
 const random = ['Star+wars', 'Terminator', 'Lord+of+the+rings', 'Matrix', 'Friends']
@@ -28,7 +28,7 @@ export const getFilmList = createAsyncThunk('list/getFilmList',
     return axios.get(url)
       .then(res => {      
         if(res.status === 200) {        
-          return res.data.Search || []
+          return res.data.Search || [{noresult: true, imdbID: '1'}]
         }      
       })  
 })
