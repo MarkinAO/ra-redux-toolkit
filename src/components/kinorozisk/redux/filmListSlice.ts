@@ -19,18 +19,24 @@ const random = ['Star+wars', 'Terminator', 'Lord+of+the+rings', 'Matrix', 'Frien
 const urlBase = 'https://www.omdbapi.com?apikey=64405bd2&s=';
 const urlRandome = urlBase + random[Math.round(Math.random() * random.length)];
 
+interface IQuery {
+  query?: string
+  abortSignal?: AbortSignal
+}
+
 export const getFilmList = createAsyncThunk('list/getFilmList', 
-  (query?: string) => {
-    query = query && query.replace(/ /ig, '+');
+  (prop?: IQuery) => {
+    const signal = prop?.abortSignal ? prop.abortSignal : undefined;
+    const query = prop?.query && prop.query.replace(/ /ig, '+');
     const castomUrl = query && urlBase + query;
     const url = castomUrl || urlRandome;
     
-    return axios.get(url)
+    return axios.get(url, {signal})
       .then(res => {      
-        if(res.status === 200) {        
+        if(res.status === 200) {
           return res.data.Search || [{noresult: true, imdbID: '1'}]
-        }      
-      })  
+        }
+      })
 })
 
 export const FilmListSlice = createSlice({

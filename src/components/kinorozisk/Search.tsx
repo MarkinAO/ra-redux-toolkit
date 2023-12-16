@@ -8,14 +8,14 @@ import FilmList from './FilmList';
 export default function Search() {
     const [query, setQuery] = useState('');
     const dispatch = useDispatch<AppDispatch>();
+    const [abortController, setAbortController] = useState(new AbortController());
 
-    let setDelay = true;
-    useEffect(() => {
-        if(setDelay) {
-            dispatch(getFilmList(query))
-            setDelay = false;
-            setTimeout(() => setDelay = true, 500)
-        }
+    useEffect(() => {           
+        abortController.abort();
+        const newController = new AbortController();
+        setAbortController(newController);
+        dispatch(getFilmList({query: query, abortSignal: newController.signal}));        
+        return () => newController.abort();
     }, [query])
 
     return(
